@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user";
+import verifyToken from "../middlewares/auth";
 
 const router = express.Router();
 
@@ -49,5 +50,8 @@ router.post(
     }
   },
 );
+router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
+  return res.status(201).json({ userId: req.userId });
+});
 
 export default router;
